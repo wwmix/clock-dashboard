@@ -38,14 +38,14 @@ const hourMarkers = Array.from({ length: 12 }, (_, index) => {
 </script>
 
 <template>
-  <svg class="analog-clock" :viewBox="showDigitalTime ? '0 0 760 320' : '0 0 320 320'" role="img" :aria-label="timeLabel">
-    <circle cx="160" cy="160" r="153" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity="0.2" />
+  <svg class="analog-clock" :viewBox="showDigitalTime ? '0 0 800 320' : '0 0 320 320'" role="img" :aria-label="timeLabel">
+    <circle cx="160" cy="160" r="153" fill="none" stroke="currentColor" stroke-width="3" stroke-opacity="0.65" />
     <g stroke="currentColor" stroke-linecap="round">
       <line
         v-for="tick in 60" :key="tick"
         x1="160" y1="19" x2="160" :y2="tick % 5 === 0 ? 32 : 24"
-        :stroke-width="tick % 5 === 0 ? 3 : 1"
-        :opacity="tick % 5 === 0 ? 0.9 : 0.35"
+        :stroke-width="tick % 5 === 0 ? 4 : 1.8"
+        :opacity="tick % 5 === 0 ? 1 : 0.7"
         :transform="`rotate(${tick * 6} 160 160)`"
       />
     </g>
@@ -62,8 +62,8 @@ const hourMarkers = Array.from({ length: 12 }, (_, index) => {
     <circle cx="160" cy="160" r="6" fill="currentColor" />
     <text
       v-if="showDigitalTime"
-      class="analog-digital-time" x="550" y="160" dy="0.35em"
-      fill="currentColor" text-anchor="middle" :font-size="showSeconds ? 96 : 140"
+      class="analog-digital-time" x="570" y="160" dy="0.35em"
+      fill="currentColor" text-anchor="middle" :font-size="showSeconds ? 104 : 160"
     >
       {{ digitalTime }}
     </text>

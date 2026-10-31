@@ -198,12 +198,36 @@ watch(idle, (newIdle) => {
   flex-shrink: 0;
 }
 
+.analog-mode .date-header {
+  justify-content: flex-start;
+  padding-left: 10%;
+}
+
+.analog-mode :deep(#weather-container) {
+  padding-left: 10%;
+}
+
+.analog-mode:not(.clock-only-mode) .analog-clock-display {
+  max-width: none;
+  /* Include the SVG's inset so the visible rim aligns with the other rows. */
+  padding-left: 9.2%;
+}
+
 .clock-only-mode .analog-clock-display {
   max-width: 200vh;
   margin: 0;
 }
 
 @media (orientation: portrait) {
+  .analog-mode .date-header {
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .analog-mode:not(.clock-only-mode) .analog-clock-display {
+    padding-left: 4vw;
+  }
+
   .analog-mode .date-header > div {
     flex-wrap: wrap;
     justify-content: center;
