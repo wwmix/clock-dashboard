@@ -39,7 +39,7 @@ const hourMarkers = Array.from({ length: 12 }, (_, index) => {
 
 <template>
   <svg class="analog-clock" :viewBox="showDigitalTime ? '0 0 760 320' : '0 0 320 320'" role="img" :aria-label="timeLabel">
-    <circle cx="160" cy="160" r="153" fill="none" stroke="currentColor" stroke-opacity="0.2" />
+    <circle cx="160" cy="160" r="153" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity="0.2" />
     <g stroke="currentColor" stroke-linecap="round">
       <line
         v-for="tick in 60" :key="tick"
