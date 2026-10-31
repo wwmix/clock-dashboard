@@ -317,21 +317,3 @@ http:
 
 **简而言之：**
 您可以免费使用和修改本项目，但请务必保留原作者署名，且严禁将本项目的任何部分（包括修改后的版本）用于商业盈利目的。
-
----
-
-## ☕️ 请我喝杯咖啡
-
-![Buy me a coffee](./public/buy-me-a-coffee.png)
-
-## Star History
-
-## Star History
-
-<a href="https://www.star-history.com/?repos=teojs%2Fclock-dashboard&type=date&legend=bottom-right">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=teojs/clock-dashboard&type=date&theme=dark&legend=bottom-right&sealed_token=SYYzRWGUm9y6eIXGtSkCIpST397ERels1B44YRWFZ1peNRifMB_Ua5VOZwHuH7srWZzR8QqeRbBo0p4jR_icK2jthf5CQ5fkpoQpcNWXZrrdgxkBc0qvPg" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=teojs/clock-dashboard&type=date&legend=bottom-right&sealed_token=SYYzRWGUm9y6eIXGtSkCIpST397ERels1B44YRWFZ1peNRifMB_Ua5VOZwHuH7srWZzR8QqeRbBo0p4jR_icK2jthf5CQ5fkpoQpcNWXZrrdgxkBc0qvPg" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=teojs/clock-dashboard&type=date&legend=bottom-right&sealed_token=SYYzRWGUm9y6eIXGtSkCIpST397ERels1B44YRWFZ1peNRifMB_Ua5VOZwHuH7srWZzR8QqeRbBo0p4jR_icK2jthf5CQ5fkpoQpcNWXZrrdgxkBc0qvPg" />
- </picture>
-</a>
