@@ -66,12 +66,12 @@ watch(idle, (newIdle) => {
         <button
           v-if="clockConfig.style === 'analog'"
           class="analog-clock-display rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
-          :style="{ color: clockConfig.color, opacity: clockConfig.opacity }"
+          :style="{ color: clockConfig.color, opacity: clockConfig.opacity, fontWeight: clockConfig.fontWeight }"
           :aria-label="t('clockSettings.showSeconds')"
           :aria-pressed="clockConfig.showSeconds"
           @click.stop="clockConfig.showSeconds = !clockConfig.showSeconds"
         >
-          <AnalogClock :now="now" :show-seconds="clockConfig.showSeconds" />
+          <AnalogClock :now="now" :show-seconds="clockConfig.showSeconds" :is24-hour="clockConfig.is24Hour" />
         </button>
         <div
           v-else
@@ -171,10 +171,8 @@ watch(idle, (newIdle) => {
 }
 
 .analog-clock-display {
-  width: 88vh;
-  height: 88vh;
-  max-width: 54vw;
-  max-height: 54vw;
+  width: 100%;
+  max-width: 96vh;
   flex-shrink: 0;
 }
 

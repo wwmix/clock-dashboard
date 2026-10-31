@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n'
 const props = defineProps<{
   now: Date
   showSeconds: boolean
+  is24Hour: boolean
 }>()
 
 const { locale } = useI18n()
@@ -15,7 +16,16 @@ const timeLabel = computed(() => props.now.toLocaleTimeString(locale.value, {
   hour: 'numeric',
   minute: '2-digit',
   second: props.showSeconds ? '2-digit' : undefined,
+  hour12: !props.is24Hour,
 }))
+
+const digitalTime = computed(() => {
+  const hours = props.now.getHours()
+  const hour = props.is24Hour ? String(hours).padStart(2, '0') : String(hours % 12 || 12)
+  const minute = String(props.now.getMinutes()).padStart(2, '0')
+  const second = String(props.now.getSeconds()).padStart(2, '0')
+  return `${hour}:${minute}${props.showSeconds ? `:${second}` : ''}`
+})
 
 const hourMarkers = Array.from({ length: 12 }, (_, index) => {
   const hour = index + 1
@@ -25,7 +35,7 @@ const hourMarkers = Array.from({ length: 12 }, (_, index) => {
 </script>
 
 <template>
-  <svg class="analog-clock" viewBox="0 0 320 320" role="img" :aria-label="timeLabel">
+  <svg class="analog-clock" viewBox="0 0 760 320" role="img" :aria-label="timeLabel">
     <circle cx="160" cy="160" r="153" fill="none" stroke="currentColor" stroke-opacity="0.2" />
     <g stroke="currentColor" stroke-linecap="round">
       <line
@@ -36,7 +46,7 @@ const hourMarkers = Array.from({ length: 12 }, (_, index) => {
         :transform="`rotate(${tick * 6} 160 160)`"
       />
     </g>
-    <g fill="currentColor" text-anchor="middle" font-size="20" font-weight="500">
+    <g class="dial-numbers" fill="currentColor" text-anchor="middle" font-size="20">
       <text v-for="marker in hourMarkers" :key="marker.hour" :x="marker.x" :y="marker.y + 7">
         {{ marker.hour }}
       </text>
@@ -47,6 +57,12 @@ const hourMarkers = Array.from({ length: 12 }, (_, index) => {
       <line v-if="showSeconds" class="second-hand" x1="160" y1="184" x2="160" y2="39" stroke-width="1.5" opacity="0.65" :transform="`rotate(${seconds * 6} 160 160)`" />
     </g>
     <circle cx="160" cy="160" r="6" fill="currentColor" />
+    <text
+      class="analog-digital-time" x="550" y="160" dy="0.35em"
+      fill="currentColor" text-anchor="middle" :font-size="showSeconds ? 80 : 110"
+    >
+      {{ digitalTime }}
+    </text>
   </svg>
 </template>
 
@@ -54,7 +70,7 @@ const hourMarkers = Array.from({ length: 12 }, (_, index) => {
 .analog-clock {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   font-family: 'SFCompactRounded', 'Huninn', sans-serif;
 }
 </style>

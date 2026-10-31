@@ -68,7 +68,7 @@ defineExpose({ save, reset })
       </div>
     </section>
 
-    <section v-if="clockDraft.style === 'digital'">
+    <section>
       <div class="flex justify-between items-center mb-6">
         <h4 class="text-white/60 uppercase tracking-widest text-sm font-medium">
           {{ t('clockSettings.fontWeight') }}
@@ -126,7 +126,6 @@ defineExpose({ save, reset })
         </div>
       </div>
       <div
-        v-if="clockDraft.style === 'digital'"
         class="settings-toggle-card"
         :class="{ active: clockDraft.is24Hour }"
         @click="clockDraft.is24Hour = !clockDraft.is24Hour"
