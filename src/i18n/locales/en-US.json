@@ -63,6 +63,9 @@
     "showFestival": "Show Festivals"
   },
   "clockSettings": {
+    "style": "Clock style",
+    "digital": "Digital clock",
+    "analog": "Analog clock",
     "color": "Clock Color",
     "fontWeight": "Weight",
     "digitSpacing": "Digit Spacing",

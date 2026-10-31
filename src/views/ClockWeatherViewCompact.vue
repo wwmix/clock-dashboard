@@ -4,6 +4,7 @@ import { Settings } from 'lucide-vue-next'
 import { storeToRefs } from 'pinia'
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import AnalogClock from '../components/AnalogClock.vue'
 import DigitCompact from '../components/DigitCompact.vue'
 import WeatherCompact from '../components/WeatherCompact.vue'
 import { useTime } from '../hooks/useTime'
@@ -11,7 +12,7 @@ import { useConfigStore } from '../stores/config'
 
 const configStore = useConfigStore()
 const { clockConfig, layoutConfig, showDrawer, activeTab } = storeToRefs(configStore)
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const { h1, h2, m1, m2, lunar, now } = useTime({
   is24Hour: computed(() => clockConfig.value.is24Hour),
@@ -62,7 +63,18 @@ watch(idle, (newIdle) => {
 
     <div class="grid grid-cols-[3fr_2fr] h-full w-full">
       <div class="flex h-full items-center justify-center pl-[2vw]">
+        <button
+          v-if="clockConfig.style === 'analog'"
+          class="analog-clock-display rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+          :style="{ color: clockConfig.color, opacity: clockConfig.opacity }"
+          :aria-label="t('clockSettings.showSeconds')"
+          :aria-pressed="clockConfig.showSeconds"
+          @click.stop="clockConfig.showSeconds = !clockConfig.showSeconds"
+        >
+          <AnalogClock :now="now" :show-seconds="clockConfig.showSeconds" />
+        </button>
         <div
+          v-else
           class="clock-display tabular-nums cursor-pointer transition-all duration-500"
           :style="{
             color: clockConfig.color,
@@ -156,6 +168,14 @@ watch(idle, (newIdle) => {
   font-family: 'ClockDigits', 'SFCompactRounded', 'Huninn', sans-serif;
   font-weight: 500;
   font-style: normal;
+}
+
+.analog-clock-display {
+  width: 88vh;
+  height: 88vh;
+  max-width: 54vw;
+  max-height: 54vw;
+  flex-shrink: 0;
 }
 
 .clock-display,

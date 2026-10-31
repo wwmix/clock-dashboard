@@ -63,6 +63,9 @@
     "showFestival": "顯示節假日"
   },
   "clockSettings": {
+    "style": "錶盤樣式",
+    "digital": "數位時鐘",
+    "analog": "圓形錶盤",
     "color": "時鐘顏色",
     "fontWeight": "字重",
     "digitSpacing": "數字間距",

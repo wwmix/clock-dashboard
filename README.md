@@ -49,6 +49,12 @@
 
 ## 🌟 特性
 
+- 🕰️ 圆形表盘
+  - 在「设置 → 时钟 → 表盘样式」中选择「圆形表盘」，点击右上角保存按钮生效
+  - 支持时针、分针与可开关的秒针，点击表盘也可切换秒针
+  - 复用时钟颜色、透明度设置，支持普通、紧凑及仅显示时钟模式
+  - 表盘选择自动保存在本地，默认保留数字时钟
+
 - **🕐 动态数字时钟**
   - 滚动动画和随机倾斜效果
   - 使用 [SF Compact Rounded](https://developer.apple.com/fonts/)、[Roboto Flex](https://fonts.google.com/specimen/Roboto+Flex) 字体

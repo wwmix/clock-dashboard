@@ -4,6 +4,7 @@ import { Settings } from 'lucide-vue-next'
 import { storeToRefs } from 'pinia'
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import AnalogClock from '../components/AnalogClock.vue'
 import Digit from '../components/Digit.vue'
 import Weather from '../components/Weather.vue'
 import { useTime } from '../hooks/useTime'
@@ -11,7 +12,7 @@ import { useConfigStore } from '../stores/config'
 
 const configStore = useConfigStore()
 const { clockConfig, layoutConfig, showDrawer, activeTab } = storeToRefs(configStore)
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const { h1, h2, m1, m2, s1, s2, lunar, now } = useTime({
   is24Hour: computed(() => clockConfig.value.is24Hour),
@@ -59,7 +60,7 @@ watch(idle, (newIdle) => {
 <template>
   <div
     class="glass-panel relative h-full flex flex-col items-center justify-center text-white w-full overflow-y-auto overflow-x-hidden"
-    :class="{ 'clock-only-mode': layoutConfig.clockOnlyMode }"
+    :class="{ 'clock-only-mode': layoutConfig.clockOnlyMode, 'analog-mode': clockConfig.style === 'analog' }"
     @click.stop="showSettingsButton = !showSettingsButton"
   >
     <!-- 设置按钮 -->
@@ -71,12 +72,12 @@ watch(idle, (newIdle) => {
     </button>
 
     <!-- 日期与农历 -->
-    <div v-if="!layoutConfig.clockOnlyMode" class="flex flex-col sm:flex-row items-center md:items-start w-full justify-center">
+    <div v-if="!layoutConfig.clockOnlyMode" class="date-header flex flex-col sm:flex-row items-center md:items-start w-full justify-center">
       <div class="flex items-center">
         <div class="date-day-big">
           {{ now.getDate() }}
         </div>
-        <div class="flex flex-col mr-[8vh]">
+        <div class="date-details flex flex-col mr-[8vh]">
           <span class="weekday-label">
             {{ weekdayLabel }}
           </span>
@@ -97,7 +98,18 @@ watch(idle, (newIdle) => {
     </div>
 
     <!-- 时钟显示 -->
+    <button
+      v-if="clockConfig.style === 'analog'"
+      class="analog-clock-display rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+      :style="{ color: clockConfig.color, opacity: clockConfig.opacity }"
+      :aria-label="t('clockSettings.showSeconds')"
+      :aria-pressed="clockConfig.showSeconds"
+      @click.stop="toggleSeconds"
+    >
+      <AnalogClock :now="now" :show-seconds="clockConfig.showSeconds" />
+    </button>
     <div
+      v-else
       class="clock-display tabular-nums cursor-pointer transition-all duration-500"
       :class="{ 'with-seconds': clockConfig.showSeconds }"
       :style="{
@@ -177,6 +189,101 @@ watch(idle, (newIdle) => {
 
 .glass-panel.clock-only-mode {
   max-width: 100vw;
+}
+
+.analog-clock-display {
+  width: 54vh;
+  height: 54vh;
+  max-width: 88vw;
+  max-height: 88vw;
+  margin: 3vh 0;
+  flex-shrink: 0;
+}
+
+.clock-only-mode .analog-clock-display {
+  width: 86vh;
+  height: 86vh;
+  margin: 0;
+}
+
+@media (orientation: portrait) {
+  .analog-mode:not(.clock-only-mode) .analog-clock-display {
+    width: 48vh;
+    height: 48vh;
+  }
+
+  .analog-mode .date-header > div {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .analog-mode .date-details {
+    margin-right: 4vw;
+  }
+
+  .analog-mode .date-day-big {
+    font-size: 18vw;
+  }
+
+  .analog-mode .weekday-label,
+  .analog-mode .lunar-date-label {
+    font-size: 5vw;
+  }
+
+  .analog-mode .year-label,
+  .analog-mode .lunar-year-label {
+    font-size: 4vw;
+  }
+
+  .analog-mode :deep(#weather-container) {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 4vw;
+    gap: 2vh 0;
+  }
+
+  .analog-mode :deep(#weather-container > div:first-child) {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .analog-mode :deep(#weather-icon) {
+    width: 16vw;
+    height: 16vw;
+  }
+
+  .analog-mode :deep(#weather-text) {
+    font-size: 5vw;
+  }
+
+  .analog-mode :deep(#location-text),
+  .analog-mode :deep(.precipitation-probability-val) {
+    font-size: 2.8vw;
+  }
+
+  .analog-mode :deep(#temp-val) {
+    font-size: 12.5vw;
+  }
+
+  .analog-mode :deep(.temp-unit) {
+    font-size: 3.6vw;
+    margin-bottom: 7vw;
+  }
+
+  .analog-mode :deep(#temp-max),
+  .analog-mode :deep(#temp-min),
+  .analog-mode :deep(.environment-data) {
+    font-size: 4vw;
+  }
+
+  .analog-mode :deep(.environment-data-icon) {
+    width: 4.2vw;
+    height: 4.2vw;
+  }
+
+  .analog-mode :deep(#aqi-label) {
+    font-size: 2vw;
+  }
 }
 
 .date-day-big {

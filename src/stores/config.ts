@@ -21,6 +21,8 @@ export const useConfigStore = defineStore('config', () => {
   })
 
   const clockConfig = ref({
+    /** 表盘样式 */
+    style: 'digital' as 'digital' | 'analog',
     /** 时钟颜色 */
     color: '#ffffff',
     /** 字重 */

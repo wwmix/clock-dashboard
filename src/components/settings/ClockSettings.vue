@@ -10,6 +10,7 @@ const { t } = useI18n()
 
 const clockDraft = ref({
   ...clockConfig.value,
+  style: clockConfig.value.style ?? 'digital',
   digitSpacing: clockConfig.value.digitSpacing ?? -0.18,
 })
 const presetColors = ['#ffffff', '#659FE8', '#EF7993', '#F2A666', '#8CDB92', '#68CDD7']
@@ -19,7 +20,7 @@ function save() {
 }
 
 function reset() {
-  clockDraft.value = { ...clockConfig.value }
+  clockDraft.value = { ...clockConfig.value, style: clockConfig.value.style ?? 'digital' }
 }
 
 defineExpose({ save, reset })
@@ -27,6 +28,23 @@ defineExpose({ save, reset })
 
 <template>
   <div class="space-y-10 animate-fade-in">
+    <section>
+      <h4 class="text-white/60 mb-4 uppercase tracking-widest text-sm font-medium">
+        {{ t('clockSettings.style') }}
+      </h4>
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          v-for="style in ['digital', 'analog'] as const" :key="style"
+          class="settings-tab-btn"
+          :class="{ active: clockDraft.style === style }"
+          :aria-pressed="clockDraft.style === style"
+          @click="clockDraft.style = style"
+        >
+          {{ t(`clockSettings.${style}`) }}
+        </button>
+      </div>
+    </section>
+
     <section>
       <h4 class="text-white/60 mb-4 uppercase tracking-widest text-sm font-medium">
         {{ t('clockSettings.color') }}
@@ -50,7 +68,7 @@ defineExpose({ save, reset })
       </div>
     </section>
 
-    <section>
+    <section v-if="clockDraft.style === 'digital'">
       <div class="flex justify-between items-center mb-6">
         <h4 class="text-white/60 uppercase tracking-widest text-sm font-medium">
           {{ t('clockSettings.fontWeight') }}
@@ -78,7 +96,7 @@ defineExpose({ save, reset })
       </div>
     </section>
 
-    <section>
+    <section v-if="clockDraft.style === 'digital'">
       <h4 class="text-white/60 uppercase tracking-widest text-sm font-medium mb-6">
         {{ t('clockSettings.digitSpacing') }}
       </h4>
@@ -108,6 +126,7 @@ defineExpose({ save, reset })
         </div>
       </div>
       <div
+        v-if="clockDraft.style === 'digital'"
         class="settings-toggle-card"
         :class="{ active: clockDraft.is24Hour }"
         @click="clockDraft.is24Hour = !clockDraft.is24Hour"
@@ -118,6 +137,7 @@ defineExpose({ save, reset })
         </div>
       </div>
       <div
+        v-if="clockDraft.style === 'digital'"
         class="settings-toggle-card"
         :class="{ active: clockDraft.enableTilt }"
         @click="clockDraft.enableTilt = !clockDraft.enableTilt"
