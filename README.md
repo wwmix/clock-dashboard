@@ -11,12 +11,6 @@
 
 本仓库 [wwmix/clock-dashboard](https://github.com/wwmix/clock-dashboard) 基于 [teojs/clock-dashboard](https://github.com/teojs/clock-dashboard) 增加圆形表盘：普通及仅时钟模式采用左侧指针时钟、右侧大号数字时间；紧凑模式仅显示圆形表盘。表盘与数字时间统一字体和字重，默认关闭秒数。
 
-**🌐 上游原版在线演示：** [https://teojs.github.io/clock-dashboard/](https://teojs.github.io/clock-dashboard/)。本分支的圆形表盘请按下方步骤本地运行或从源码构建部署。
-
-**👏 欢迎加入讨论：** [QQ群(1018023465) ↗](https://qm.qq.com/q/x6hf1Evdni)
-
-🌟 如果本项目对你有帮助，不妨点点Star，或者[请我喝杯咖啡☕️](#%EF%B8%8F-请我喝杯咖啡)
-
 > ⚠️ 此项目用到 `Vue 3.x` 框架，这意味着最高系统为 iOS9.3.6 的 iPad mini 1 将无法支持，[只支持原生支持 ES2016 的浏览器](https://caniuse.com/es2016)， 目前仅在 iOS10.3.3 及更高版本测试通过。
 >
 > 如果您的设备系统为 iOS9 或更低版本，请使用 [https://github.com/teojs/clock-dashboard-vue2](https://github.com/teojs/clock-dashboard-vue2)。
