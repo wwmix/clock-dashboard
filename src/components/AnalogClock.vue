@@ -59,7 +59,7 @@ const hourMarkers = Array.from({ length: 12 }, (_, index) => {
     <circle cx="160" cy="160" r="6" fill="currentColor" />
     <text
       class="analog-digital-time" x="550" y="160" dy="0.35em"
-      fill="currentColor" text-anchor="middle" :font-size="showSeconds ? 80 : 110"
+      fill="currentColor" text-anchor="middle" :font-size="showSeconds ? 96 : 140"
     >
       {{ digitalTime }}
     </text>

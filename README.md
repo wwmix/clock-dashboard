@@ -3,13 +3,15 @@
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](LICENSE)
 [![Vue](https://img.shields.io/badge/vue-3.4-brightgreen.svg)](https://vuejs.org/)
 [![Vite](https://img.shields.io/badge/vite-7.0-blueviolet.svg)](https://vitejs.dev/)
-[![releases](https://img.shields.io/github/v/release/teojs/clock-dashboard?color=green&label=releases)](https://github.com/teojs/clock-dashboard/releases)
+[![上游版本](https://img.shields.io/github/v/release/teojs/clock-dashboard?color=green&label=upstream)](https://github.com/teojs/clock-dashboard/releases)
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=teojs.clock-dashboard)
 
 一个基于 Vue 3 + TypeScript + Vite + Tailwind CSS 构建的在线天气时钟看板。
 将闲置旧 iPad 变为时钟看板，支持天气、农历、日历、Home Assistant 智能设备控制（通过左右滑动切换页面）。
 
-**🌐 在线地址：** [https://teojs.github.io/clock-dashboard/](https://teojs.github.io/clock-dashboard/)
+本仓库 [wwmix/clock-dashboard](https://github.com/wwmix/clock-dashboard) 基于 [teojs/clock-dashboard](https://github.com/teojs/clock-dashboard) 增加圆形表盘：左侧指针时钟、右侧大号数字时间，统一数字字体和字重，默认只显示小时与分钟。
+
+**🌐 上游原版在线演示：** [https://teojs.github.io/clock-dashboard/](https://teojs.github.io/clock-dashboard/)。本分支的圆形表盘请按下方步骤本地运行或从源码构建部署。
 
 **👏 欢迎加入讨论：** [QQ群(1018023465) ↗](https://qm.qq.com/q/x6hf1Evdni)
 
@@ -26,6 +28,12 @@
 ---
 
 ## 📸 预览
+
+### 本分支：圆形表盘与数字时间
+
+![左侧圆形表盘与右侧大号数字时间，默认不显示秒数](./public/screenshots/analog-digital.png)
+
+### 原有数字时钟、智能控制与日历
 
 ![时钟页面](./public/screenshots/4.gif)
 
@@ -49,12 +57,14 @@
 
 ## 🌟 特性
 
-- 🕰️ 圆形表盘
+- **🕰️ 圆形表盘与数字时间**
   - 在「设置 → 时钟 → 表盘样式」中选择「圆形表盘」，点击右上角保存按钮生效
-  - 左侧圆形表盘、右侧数字时间同步显示，使用相同的数字字体与字重，支持 12/24 小时制
-  - 支持时针、分针与可开关的秒针，点击表盘也可切换秒针
+  - 左侧圆形表盘、右侧大号数字时间同步显示，支持 12/24 小时制
+  - 表盘刻字与右侧数字使用相同的 SF Compact Rounded 字体，共用字重设置
+  - 默认关闭「显示秒钟」，右侧仅显示 `HH:MM`；12 小时制的小时不补前导零
+  - 在时钟设置中开启「显示秒钟」，或点击表盘区域，可同时显示秒针和数字秒数（`HH:MM:SS`）
   - 复用时钟颜色、透明度设置，支持普通、紧凑及仅显示时钟模式
-  - 表盘选择自动保存在本地，默认保留数字时钟
+  - 样式与设置保存在本地，刷新后保留；首次打开仍默认使用原有数字时钟
 
 - **🕐 动态数字时钟**
   - 滚动动画和随机倾斜效果
@@ -105,7 +115,7 @@
 #### 1. 克隆项目
 
 ```bash
-git clone https://github.com/teojs/clock-dashboard.git
+git clone https://github.com/wwmix/clock-dashboard.git
 cd clock-dashboard
 ```
 
@@ -131,23 +141,21 @@ pnpm build
 
 打包产物将生成在 `dist` 目录中。
 
+#### 5. 启用圆形表盘
+
+1. 点击右上角设置按钮，进入「时钟」。
+2. 在「表盘样式」中选择「圆形表盘」。
+3. 按需调整颜色、字重、透明度及 12/24 小时制。
+4. 默认不显示秒数；如果浏览器已有开启秒数的历史配置，关闭「显示秒钟」即可。
+5. 点击右上角保存按钮，返回左表盘、右数字时间的界面。
+
 ---
 
 ## 🐳 Docker 部署
 
-### 方式一：使用预构建镜像
+在克隆本仓库后，进入 `clock-dashboard` 目录构建，镜像中会包含本分支的圆形表盘功能。
 
-```bash
-# 拉取最新镜像
-docker pull ghcr.io/teojs/clock-dashboard:latest
-
-# 运行容器
-docker run -d -p 8080:80 --name clock-dashboard ghcr.io/teojs/clock-dashboard:latest
-```
-
-访问 `http://localhost:8080` 即可使用。
-
-### 方式二：本地构建镜像
+### 方式一：本地构建镜像
 
 ```bash
 # 构建镜像
@@ -157,16 +165,17 @@ docker build -t clock-dashboard:latest .
 docker run -d -p 8080:80 --name clock-dashboard clock-dashboard:latest
 ```
 
-### 方式三：使用 Docker Compose（推荐）
+访问 `http://localhost:8080` 即可使用。
 
-创建 `docker-compose.yml` 文件：
+### 方式二：使用 Docker Compose（推荐）
+
+在仓库根目录创建 `docker-compose.yml` 文件：
 
 ```yaml
-version: '3.8'
-
 services:
   clock-dashboard:
-    image: ghcr.io/teojs/clock-dashboard:latest
+    build: .
+    image: clock-dashboard:latest
     container_name: clock-dashboard
     ports:
       - '8080:80'
@@ -176,12 +185,12 @@ services:
 然后运行：
 
 ```bash
-docker-compose up -d
+docker compose up -d --build
 ```
 
 ### 自动更新（群晖 Docker）
 
-由于本项目会不定时优化和更新，如果是群晖 Docker 部署，建议添加自动更新脚本。
+使用本地源码构建时，更新需要拉取本仓库代码并重新构建镜像。如果是群晖 Docker 部署，可在任务计划中执行以下步骤。
 
 **设置步骤：**
 
@@ -189,10 +198,8 @@ docker-compose up -d
 2. 在任务设置 → 用户定义的脚本 → 填入以下内容：
 
 ```bash
-cd /volume1/docker/your_project_folder
-docker-compose pull
-docker-compose up -d --remove-orphans
-docker image prune -f
+cd /volume1/docker/clock-dashboard
+git pull --ff-only && docker compose up -d --build --remove-orphans
 ```
 
 ---
@@ -244,6 +251,15 @@ http:
 
 ## 📝 更新日志
 
+### 本分支更新（2026-10-31）
+
+- 新增左侧圆形表盘与右侧数字时间同步显示。
+- 放大右侧数字时间，统一表盘刻字与时间的字体、字重。
+- 默认仅显示时、分，支持手动开启秒针和数字秒数。
+- 兼容普通、紧凑和仅时钟模式，保留原有数字时钟样式。
+
+### 上游更新日志
+
 ### v1.21.0 (2026-08-19)
 
 - ✨ 新增紧凑时钟模式，适合手机端小屏显示
@@ -291,7 +307,7 @@ http:
 
 - ✨ 新增天气设置弹窗，支持设置天气刷新间隔、下雨、下雪、打雷特效开关
 
-> 查看完整更新日志：[Releases](https://github.com/teojs/clock-dashboard/releases)
+> 查看完整上游更新日志：[Releases](https://github.com/teojs/clock-dashboard/releases)
 
 ---
 
