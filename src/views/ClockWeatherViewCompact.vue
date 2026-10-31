@@ -71,7 +71,7 @@ watch(idle, (newIdle) => {
           :aria-pressed="clockConfig.showSeconds"
           @click.stop="clockConfig.showSeconds = !clockConfig.showSeconds"
         >
-          <AnalogClock :now="now" :show-seconds="clockConfig.showSeconds" :is24-hour="clockConfig.is24Hour" />
+          <AnalogClock :now="now" :show-seconds="clockConfig.showSeconds" :is24-hour="clockConfig.is24Hour" :show-digital-time="false" />
         </button>
         <div
           v-else
@@ -171,8 +171,10 @@ watch(idle, (newIdle) => {
 }
 
 .analog-clock-display {
-  width: 100%;
-  max-width: 96vh;
+  width: 88vh;
+  height: 88vh;
+  max-width: 54vw;
+  max-height: 54vw;
   flex-shrink: 0;
 }
 

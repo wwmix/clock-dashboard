@@ -2,11 +2,14 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   now: Date
   showSeconds: boolean
   is24Hour: boolean
-}>()
+  showDigitalTime?: boolean
+}>(), {
+  showDigitalTime: true,
+})
 
 const { locale } = useI18n()
 const seconds = computed(() => props.now.getSeconds())
@@ -35,7 +38,7 @@ const hourMarkers = Array.from({ length: 12 }, (_, index) => {
 </script>
 
 <template>
-  <svg class="analog-clock" viewBox="0 0 760 320" role="img" :aria-label="timeLabel">
+  <svg class="analog-clock" :viewBox="showDigitalTime ? '0 0 760 320' : '0 0 320 320'" role="img" :aria-label="timeLabel">
     <circle cx="160" cy="160" r="153" fill="none" stroke="currentColor" stroke-opacity="0.2" />
     <g stroke="currentColor" stroke-linecap="round">
       <line
@@ -58,6 +61,7 @@ const hourMarkers = Array.from({ length: 12 }, (_, index) => {
     </g>
     <circle cx="160" cy="160" r="6" fill="currentColor" />
     <text
+      v-if="showDigitalTime"
       class="analog-digital-time" x="550" y="160" dy="0.35em"
       fill="currentColor" text-anchor="middle" :font-size="showSeconds ? 96 : 140"
     >

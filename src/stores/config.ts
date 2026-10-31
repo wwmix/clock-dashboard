@@ -29,7 +29,7 @@ export const useConfigStore = defineStore('config', () => {
     fontWeight: 700,
     /** 数字随机倾斜 */
     enableTilt: true,
-    /** 显示秒钟，默认关闭；圆形模式同时控制秒针和数字秒数 */
+    /** 显示秒钟，默认关闭；控制秒针及可见数字时钟的秒数 */
     showSeconds: false,
     /** 透明度 */
     opacity: 0.9,
